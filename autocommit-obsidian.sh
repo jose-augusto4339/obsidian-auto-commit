@@ -2,7 +2,8 @@
 
 set -euo pipefail
 
-OBSIDIAN_DIRECTORY= $OBSIDIAN_VAULT_PATH
+OBSIDIAN_DIRECTORY="$OBSIDIAN_VAULT_PATH"
+
 if find "$OBSIDIAN_DIRECTORY" -type f -newermt "$(date +%Y-%m-%d)" ! -name "*.log" | grep -q .; then
     echo "[INFO] Changes detected in '$OBSIDIAN_DIRECTORY'."
     cd "$OBSIDIAN_DIRECTORY" || exit 1
@@ -15,10 +16,10 @@ if find "$OBSIDIAN_DIRECTORY" -type f -newermt "$(date +%Y-%m-%d)" ! -name "*.lo
     echo "[INFO] Adding files to the staging area..."
     git add .
 
-    _COMMIT_DATE=$(date +%Y-%m-%d)
+    COMMIT_DATE=$(date +%Y-%m-%d)
 
     echo "[INFO] Performing commit..."
-    git commit -m "$_COMMIT_DATE" || {
+    git commit -m "$COMMIT_DATE" || {
         echo "[WARN] Nothing to commit."
         exit 0
     }
